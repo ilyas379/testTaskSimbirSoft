@@ -1,3 +1,5 @@
+//import io.qameta.allure.Step;
+import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -26,8 +28,9 @@ public class GooglePost {
         this.driver = driver;
     }
 
+    @Step("Поиск количества входящих сообщений")
     public int getMessagesCount(){
-        logger.info("найдено сообщений, с темой пиcьма \"" + FIND_TEXT + "\": " + getMessageList().size());
+        logger.info("Найдено сообщений, с темой пиcьма \"" + FIND_TEXT + "\": " + getMessageList().size());
         return getMessageList().size();
     }
 }
