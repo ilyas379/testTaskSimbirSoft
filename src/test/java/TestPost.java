@@ -41,7 +41,7 @@ public class TestPost {
     }
 
     @Test
-    public void testSendPost() {
+    public void testSendPost() throws InterruptedException {
         GoogleAuth googleAuth = new GoogleAuth(driver);
         googleAuth.authorization(login, password);
 

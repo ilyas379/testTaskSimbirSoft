@@ -63,7 +63,7 @@ public class SendMessage {
     }
 
     @Step("Отправка сообщения на адрес {0}")
-    public void sendMail(String address, String subject, String body){
+    public void sendMail(String address, String subject, String body) throws InterruptedException {
         logger.info("Нажатие кнопки \"Написать\"");
         getWriteButton().click();
         logger.info("Заполнение адреса: " + address);
@@ -74,6 +74,7 @@ public class SendMessage {
         getSendBody().sendKeys(body);
         logger.info("Отправка письма");
         getSendButton().click();
+        Thread.sleep(3000);
     }
 
 
