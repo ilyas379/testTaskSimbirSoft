@@ -1,4 +1,5 @@
 //import io.qameta.allure.Step;
+
 import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +16,7 @@ public class SendMessage {
     private static final String THEME_MESSAGE = "aoT";
     private static final String BODY_MESSAGE = "//*[contains(@class, 'Am')]";
     private static final String SEND_BUTTON = "//*[contains(@class, 'dC')]";
+    private static final String CLOSE_BUTTON = "//*[@id=\"link_vsm\"]";
 
     private final WebDriver driver;
     private WebElement writeButton;
@@ -22,48 +24,56 @@ public class SendMessage {
     private WebElement sendTheme;
     private WebElement sendBody;
     private WebElement sendButton;
+    private WebElement closeButton;
+
+    public SendMessage(WebDriver driver) {
+        this.driver = driver;
+    }
 
     private WebElement getWriteButton() {
-        if(writeButton == null){
+        if (writeButton == null) {
             writeButton = driver.findElement(By.className(WRITE_BUTTON));
         }
         return writeButton;
     }
 
-    private WebElement getSendWhom(){
-        if(sendWhom ==null){
+    private WebElement getSendWhom() {
+        if (sendWhom == null) {
             sendWhom = driver.findElement(By.className(RECIPIENT));
         }
         return sendWhom;
     }
 
-    private WebElement getSendTheme(){
-        if(sendTheme == null) {
+    private WebElement getSendTheme() {
+        if (sendTheme == null) {
             sendTheme = driver.findElement(By.className(THEME_MESSAGE));
         }
         return sendTheme;
     }
 
-    private WebElement getSendBody(){
-        if(sendBody == null) {
+    private WebElement getSendBody() {
+        if (sendBody == null) {
             sendBody = driver.findElement(By.xpath(BODY_MESSAGE));
         }
         return sendBody;
     }
 
-    private WebElement getSendButton(){
-        if(sendButton == null) {
+    private WebElement getSendButton() {
+        if (sendButton == null) {
             sendButton = driver.findElement(By.xpath(SEND_BUTTON));
         }
         return sendButton;
     }
 
-    public SendMessage (WebDriver driver){
-        this.driver = driver;
+    private WebElement getCloseButton() {
+        if (closeButton == null) {
+            closeButton = driver.findElement(By.xpath(CLOSE_BUTTON));
+        }
+        return closeButton;
     }
 
     @Step("Отправка сообщения на адрес {0}")
-    public void sendMail(String address, String subject, String body) throws InterruptedException {
+    public void sendMail(String address, String subject, String body) {
         logger.info("Нажатие кнопки \"Написать\"");
         getWriteButton().click();
         logger.info("Заполнение адреса: " + address);
@@ -74,11 +84,9 @@ public class SendMessage {
         getSendBody().sendKeys(body);
         logger.info("Отправка письма");
         getSendButton().click();
-        Thread.sleep(3000);
+        logger.info("Закрытие окна уведомления");
+        getCloseButton().click();
     }
-
-
-
-
-
 }
+
+

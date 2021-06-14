@@ -34,14 +34,14 @@ public class TestPost {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         login = "autotestsimbir@gmail.com";
-        password = "795880asDd";
+        password = "429635asDd";
         messageSubject = "SimbirSoft Тестовое задание. Герасимчук";
         messageBody = "Найдено сообщений: ";
 
     }
 
     @Test
-    public void testSendPost() throws InterruptedException {
+    public void testSendPost() {
         GoogleAuth googleAuth = new GoogleAuth(driver);
         googleAuth.authorization(login, password);
 
@@ -57,5 +57,4 @@ public class TestPost {
         logger.info("Закрытие браузера");
         driver.quit();
     }
-
 }

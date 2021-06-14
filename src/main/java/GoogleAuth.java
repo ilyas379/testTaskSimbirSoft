@@ -1,4 +1,3 @@
-//import io.qameta.allure.Step;
 import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -69,6 +68,4 @@ public class GoogleAuth {
         logger.info("Ввод пароля: " + password);
         getPassNext().click();
     }
-
-
 }
