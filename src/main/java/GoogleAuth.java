@@ -15,11 +15,8 @@ public class GoogleAuth {
     private static final String PASS_INPUT = "//*[@id=\"password\"]//div[1]/input";
     private static final String PASS_NEXT = "//*[@id=\"passwordNext\"]";
 
-    private final WebDriver driver;
-
     public GoogleAuth(WebDriver driver) {
-        this.driver = driver;
-        this.driver.get(MAIL_URL);
+        driver.get(MAIL_URL);
     }
 
     @FindBy(xpath = LOGIN_INPUT_FIELD)
