@@ -1,11 +1,14 @@
-//import io.qameta.allure.Step;
-
 import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class SendMessage {
 
@@ -19,73 +22,49 @@ public class SendMessage {
     private static final String CLOSE_BUTTON = "//*[@id=\"link_vsm\"]";
 
     private final WebDriver driver;
-    private WebElement writeButton;
-    private WebElement sendWhom;
-    private WebElement sendTheme;
-    private WebElement sendBody;
-    private WebElement sendButton;
-    private WebElement closeButton;
-
     public SendMessage(WebDriver driver) {
         this.driver = driver;
     }
+    @FindBy(className = WRITE_BUTTON)
+    private WebElement writeButton;
 
-    private WebElement getWriteButton() {
-        if (writeButton == null) {
-            writeButton = driver.findElement(By.className(WRITE_BUTTON));
-        }
-        return writeButton;
-    }
+    @FindBy(className = RECIPIENT)
+    private WebElement sendWhom;
 
-    private WebElement getSendWhom() {
-        if (sendWhom == null) {
-            sendWhom = driver.findElement(By.className(RECIPIENT));
-        }
-        return sendWhom;
-    }
+    @FindBy(className = THEME_MESSAGE)
+    private WebElement sendTheme;
 
-    private WebElement getSendTheme() {
-        if (sendTheme == null) {
-            sendTheme = driver.findElement(By.className(THEME_MESSAGE));
-        }
-        return sendTheme;
-    }
+    @FindBy(xpath = BODY_MESSAGE)
+    private WebElement sendBody;
 
-    private WebElement getSendBody() {
-        if (sendBody == null) {
-            sendBody = driver.findElement(By.xpath(BODY_MESSAGE));
-        }
-        return sendBody;
-    }
+    @FindBy(xpath = SEND_BUTTON)
+    private WebElement sendButton;
 
-    private WebElement getSendButton() {
-        if (sendButton == null) {
-            sendButton = driver.findElement(By.xpath(SEND_BUTTON));
-        }
-        return sendButton;
-    }
+    @FindBy(xpath = CLOSE_BUTTON)
+    private WebElement closeButton;
 
-    private WebElement getCloseButton() {
-        if (closeButton == null) {
-            closeButton = driver.findElement(By.xpath(CLOSE_BUTTON));
-        }
-        return closeButton;
+
+
+    public void waitHideElement (By elementName) {
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.invisibilityOfElementLocated(elementName));
     }
 
     @Step("Отправка сообщения на адрес {0}")
     public void sendMail(String address, String subject, String body) {
         logger.info("Нажатие кнопки \"Написать\"");
-        getWriteButton().click();
+        writeButton.click();
         logger.info("Заполнение адреса: " + address);
-        getSendWhom().sendKeys(address);
+        sendWhom.sendKeys(address);
         logger.info("Заполнение темы письма: " + subject);
-        getSendTheme().sendKeys(subject);
+        sendTheme.sendKeys(subject);
         logger.info("Заполнение тела письма");
-        getSendBody().sendKeys(body);
+        sendBody.sendKeys(body);
         logger.info("Отправка письма");
-        getSendButton().click();
+        sendButton.click();
+        logger.info("Проверка отображения элемента");
+        waitHideElement(By.xpath("SEND_BUTTON"));
         logger.info("Закрытие окна уведомления");
-        getCloseButton().click();
+        closeButton.click();
     }
 }
 
