@@ -1,4 +1,4 @@
-import DataProviderProperty.DataProviderUserProperty;
+import DataProviderProperty.DataProviderInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -8,6 +8,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import pojo.Message;
+import pojo.User;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -22,11 +24,6 @@ public class TestPost {
 
     private WebDriver driver;
 
-    private String login;
-    private String password;
-    private String messageSubject;
-    private String messageBody;
-
     @BeforeTest
     public void beforeTestMethod() throws IOException {
         logger.info("Подготовка тестового окружения");
@@ -34,26 +31,18 @@ public class TestPost {
                 .addAlternative(new ChromeOptions())
                 .build();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-        DataProviderUserProperty propertyUserValues = new DataProviderUserProperty();
-        propertyUserValues.getPropValues();
-        login = propertyUserValues.getUserName();
-        password = propertyUserValues.getPassword();
-
-        messageSubject = propertyUserValues.getMessageSubject();
-        messageBody = propertyUserValues.getMessageBody();
     }
 
-    @Test
-    public void testSendPost() {
+    @Test(dataProvider = "testData", dataProviderClass = DataProviderInfo.class)
+    public void testSendPost(User user, Message message) {
         GoogleAuth googleAuth = PageFactory.initElements(driver, GoogleAuth.class);
-        googleAuth.authorization(login, password);
+        googleAuth.authorization(user.getUserName(), user.getPassword());
 
         GooglePost googlePost = PageFactory.initElements(driver, GooglePost.class);
-        int countMessages = googlePost.getMessagesCount();
+        long countMessages = googlePost.getMessagesCount(message.getMessageSearchText());
 
         SendMessage sendMessage = PageFactory.initElements(driver, SendMessage.class);
-        sendMessage.sendMail(login, messageSubject, messageBody + countMessages);
+        sendMessage.sendMail(user.getUserName(), message.getSubject(), message.getMessageBody() + countMessages);
     }
 
     @AfterTest

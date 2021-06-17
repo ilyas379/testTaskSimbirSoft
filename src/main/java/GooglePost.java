@@ -11,20 +11,18 @@ public class GooglePost {
 
     private static final Logger logger = LogManager.getLogger(GooglePost.class);
 
-    private static final String FIND_TEXT = "Simbirsoft Тестовое задание";
-    private static final String FIND_MESSAGES = "//*[contains(@class, 'y6')]//*[text() ='" + FIND_TEXT + "']";
-    private final WebDriver driver;
-
-    public GooglePost(WebDriver driver) {
-        this.driver = driver;
-    }
+    private static final String FIND_MESSAGES = "//table[contains(@class, 'zt')]" +
+            "//tr[contains(@class, 'zA')]/td[contains(@class, 'a4W')]//span[contains(@class, 'bog')]/span";
 
     @FindBy(xpath = FIND_MESSAGES)
     private List<WebElement> messageList;
 
     @Step("Поиск количества входящих сообщений")
-    public int getMessagesCount() {
-        logger.info("Найдено сообщений, с темой пиcьма \"" + FIND_TEXT + "\": " + messageList.size());
-        return messageList.size();
+    public long getMessagesCount(String findText) {
+        long messagesCount = messageList.stream()
+                .filter(webElement -> webElement.getText().equals(findText))
+                .count();
+        logger.info("Найдено сообщений, с темой пиcьма \"" + findText + "\": " + messagesCount);
+        return messagesCount;
     }
 }

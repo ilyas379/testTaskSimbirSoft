@@ -14,7 +14,11 @@ public class DataProviderUserProperty {
 
     private String messageSubject;
     private String messageBody;
+    private String messageSearchText;
 
+    public DataProviderUserProperty() {
+
+    }
 
     public String getUserName() {
         return userName;
@@ -30,6 +34,10 @@ public class DataProviderUserProperty {
 
     public String getMessageBody() {
         return messageBody;
+    }
+
+    public String getMessageSearchText() {
+        return messageSearchText;
     }
 
     public void getPropValues() throws IOException {
@@ -55,8 +63,9 @@ public class DataProviderUserProperty {
 
             userName = prop.getProperty("userName");
             password = prop.getProperty("password");
-            messageSubject =prop.getProperty("subject");
-            messageBody =prop.getProperty("messageBody");
+            messageSubject = prop.getProperty("subject");
+            messageBody = prop.getProperty("messageBody");
+            messageSearchText = prop.getProperty("messageSearchText");
 
         } catch (Exception e) {
             System.out.println("Exception: " + e);
