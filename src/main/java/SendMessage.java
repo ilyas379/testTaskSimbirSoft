@@ -43,8 +43,6 @@ public class SendMessage {
     @FindBy(xpath = CLOSE_BUTTON)
     private WebElement closeButton;
 
-
-
     public void waitHideElement (By elementName) {
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.invisibilityOfElementLocated(elementName));
     }
@@ -57,7 +55,7 @@ public class SendMessage {
         sendWhom.sendKeys(address);
         logger.info("Заполнение темы письма: " + subject);
         sendTheme.sendKeys(subject);
-        logger.info("Заполнение тела письма");
+        logger.info("Заполнение тела письма: " + body);
         sendBody.sendKeys(body);
         logger.info("Отправка письма");
         sendButton.click();

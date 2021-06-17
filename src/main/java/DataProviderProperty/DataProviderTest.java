@@ -4,10 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import pojo.Message;
 import pojo.User;
 
-import javax.jws.soap.SOAPBinding;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public class DataProviderTest {
     ObjectMapper objectMapper = new ObjectMapper();

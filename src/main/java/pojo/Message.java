@@ -35,4 +35,13 @@ public class Message {
     public void setMessageSearchText(String messageSearchText) {
         this.messageSearchText = messageSearchText;
     }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "subject='" + subject + '\'' +
+                ", messageBody='" + messageBody + '\'' +
+                ", messageSearchText='" + messageSearchText + '\'' +
+                '}';
+    }
 }

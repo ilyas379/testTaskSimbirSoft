@@ -31,7 +31,6 @@ public class GoogleAuth {
     @FindBy(xpath = PASS_NEXT)
     private WebElement passNext;
 
-
     @Step("Авторизация на сайте под пользователем {0}")
     public void authorization(String login, String password) {
         logger.info("Ввод логина: " + login);

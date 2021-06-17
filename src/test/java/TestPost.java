@@ -25,7 +25,7 @@ public class TestPost {
     private WebDriver driver;
 
     @BeforeTest
-    public void beforeTestMethod() throws IOException {
+    public void beforeTestMethod() {
         logger.info("Подготовка тестового окружения");
         driver = RemoteWebDriver.builder()
                 .addAlternative(new ChromeOptions())
