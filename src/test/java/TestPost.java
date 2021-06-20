@@ -11,7 +11,6 @@ import org.testng.annotations.Test;
 import pojo.Message;
 import pojo.User;
 
-import java.io.IOException;
 import java.time.Duration;
 
 public class TestPost {
