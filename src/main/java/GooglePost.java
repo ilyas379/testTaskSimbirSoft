@@ -10,10 +10,7 @@ public class GooglePost {
 
     private static final Logger logger = LogManager.getLogger(GooglePost.class);
 
-    private static final String FIND_MESSAGES = "//table[contains(@class, 'zt')]" +
-            "//tr[contains(@class, 'zA')]/td[contains(@class, 'a4W')]//span[contains(@class, 'bog')]/span";
-
-    @FindBy(xpath = FIND_MESSAGES)
+    @FindBy(xpath = "//table[contains(@class, 'zt')]//tr[contains(@class, 'zA')]/td[contains(@class, 'a4W')]//span[contains(@class, 'bog')]/span")
     private List<WebElement> messageList;
 
     @Step("Поиск количества входящих сообщений")

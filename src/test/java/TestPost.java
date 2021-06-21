@@ -1,4 +1,3 @@
-import DataProviderProperty.DataProviderInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -8,9 +7,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import pojo.Message;
-import pojo.User;
 
+import java.io.IOException;
 import java.time.Duration;
 
 public class TestPost {
@@ -22,26 +20,36 @@ public class TestPost {
     }
 
     private WebDriver driver;
+    private String mailUrl;
+    private String login;
+    private String password;
 
     @BeforeTest
-    public void beforeTestMethod() {
+    public void beforeTestMethod() throws IOException {
         logger.info("Подготовка тестового окружения");
         driver = RemoteWebDriver.builder()
                 .addAlternative(new ChromeOptions())
                 .build();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+        DataProviderUserProperty propertyUserValues = new DataProviderUserProperty();
+        propertyUserValues.getPropValues();
+        login = propertyUserValues.getUserName();
+        password = propertyUserValues.getPassword();
+
+        mailUrl = "https://mail.google.com";
     }
 
-    @Test(dataProvider = "testData", dataProviderClass = DataProviderInfo.class)
-    public void testSendPost(User user, Message message) {
-        GoogleAuth googleAuth = PageFactory.initElements(driver, GoogleAuth.class);
-        googleAuth.authorization(user.getUserName(), user.getPassword());
+    @Test()
+    public void testSendPost() {
+        GoogleAuth googleAuth = GoogleAuth.getInstance(driver, mailUrl);
+        googleAuth.authorization(login, password);
 
         GooglePost googlePost = PageFactory.initElements(driver, GooglePost.class);
-        long countMessages = googlePost.getMessagesCount(message.getMessageSearchText());
+        long countMessages = googlePost.getMessagesCount("Simbirsoft Тестовое задание");
 
-        SendMessage sendMessage = PageFactory.initElements(driver, SendMessage.class);
-        sendMessage.sendMail(user.getUserName(), message.getSubject(), message.getMessageBody() + countMessages);
+        SendMessage sendMessage = SendMessage.getInstance(driver);
+        sendMessage.sendMail(login, "SimbirSoft Тестовое задание. Герасимчук", "Найдено сообщений: " + countMessages);
     }
 
     @AfterTest

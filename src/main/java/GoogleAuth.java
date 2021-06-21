@@ -4,31 +4,27 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class GoogleAuth {
 
     private static final Logger logger = LogManager.getLogger(GoogleAuth.class);
 
-    private static final String MAIL_URL = "https://mail.google.com";
-    private static final String LOGIN_INPUT_FIELD = "//*[@id=\"identifierId\"]";
-    private static final String LOGIN_NEXT_FIELD = "//*[@id=\"identifierNext\"]";
-    private static final String PASS_INPUT = "//*[@id=\"password\"]//div[1]/input";
-    private static final String PASS_NEXT = "//*[@id=\"passwordNext\"]";
-
-    public GoogleAuth(WebDriver driver) {
-        driver.get(MAIL_URL);
+    public static GoogleAuth getInstance(WebDriver driver, String mailUrl){
+       driver.get(mailUrl);
+       return PageFactory.initElements(driver, GoogleAuth.class);
     }
 
-    @FindBy(xpath = LOGIN_INPUT_FIELD)
+    @FindBy(xpath = "//*[@id=\"identifierId\"]")
     private WebElement loginInput;
 
-    @FindBy(xpath = LOGIN_NEXT_FIELD)
+    @FindBy(xpath = "//*[@id=\"identifierNext\"]")
     private WebElement loginNext;
 
-    @FindBy(xpath = PASS_INPUT)
+    @FindBy(xpath = "//*[@id=\"password\"]//div[1]/input")
     private WebElement passInput;
 
-    @FindBy(xpath = PASS_NEXT)
+    @FindBy(xpath = "//*[@id=\"passwordNext\"]")
     private WebElement passNext;
 
     @Step("Авторизация на сайте под пользователем {0}")
