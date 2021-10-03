@@ -38,4 +38,12 @@ public class GroupHelper extends HelperBase {
         System.out.println("выбор группы");
         click(By.name("selected[]"));
     }
+
+    public void initGroupModification() {
+        click(By.name("edit"));
+    }
+
+    public void submitGroupModification() {
+        click(By.name("update"));
+    }
 }
