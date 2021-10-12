@@ -34,9 +34,10 @@ public class GroupHelper extends HelperBase {
         click(By.name("delete"));
     }
 
-    public void selectGroup() {
+    public void selectGroup(int index) {
         System.out.println("выбор группы");
-        click(By.name("selected[]"));
+        driver.findElements(By.name("selected[]")).get(index).click();
+//        click(By.name("selected[]"));
     }
 
     public void initGroupModification() {
@@ -45,5 +46,20 @@ public class GroupHelper extends HelperBase {
 
     public void submitGroupModification() {
         click(By.name("update"));
+    }
+
+    public void createGroup(GroupData group) {
+        initGroupCreation();
+        fillGroupForm(group);
+        submitGroupCreation();
+        returnToGroupPage();
+    }
+
+    public boolean isThereAGroup() {
+        return isElementPresent(By.name("selected[]"));
+    }
+
+    public int getGroupCount() {
+        return driver.findElements(By.name("selected[]")).size();
     }
 }

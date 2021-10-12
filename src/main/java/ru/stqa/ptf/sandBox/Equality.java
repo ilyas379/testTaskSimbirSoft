@@ -1,4 +1,4 @@
-package ru.stqa.ptf.addressbook.sandbox;
+package ru.stqa.ptf.sandBox;
 
 public class Equality {
 
