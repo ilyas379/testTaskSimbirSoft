@@ -3,12 +3,19 @@ package ru.stqa.ptf.addressbook.model;
 public class ContactData {
 
     private final String firstName;
-    private final String secondName;
+    private final String lastName;
+    private final String address;
+    private final String email;
+    private final String phone;
+
     private String group;
 
-    public ContactData(String firstName, String secondName, String group) {
+    public ContactData(String firstName, String lastName, String address, String email, String phone, String group) {
         this.firstName = firstName;
-        this.secondName = secondName;
+        this.lastName = lastName;
+        this.address = address;
+        this.email = email;
+        this.phone = phone;
         this.group = group;
     }
 
@@ -17,7 +24,19 @@ public class ContactData {
     }
 
     public String getLastName() {
-        return secondName;
+        return lastName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 
     public String getGroup() {

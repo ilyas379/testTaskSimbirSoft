@@ -1,7 +1,6 @@
 package ru.stqa.ptf.addressbook.appManager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
@@ -19,6 +18,9 @@ public class ContactHelper extends HelperBase {
     public void fillContactForm (ContactData contactData, boolean creation) {
         type(By.name("firstname"), contactData.getFirstName());
         type(By.name("lastname"), contactData.getLastName());
+        type(By.name("address"), contactData.getAddress());
+        type(By.name("email"), contactData.getEmail());
+        type(By.name("home"), contactData.getPhone());
 
         if(creation){
             new Select(driver.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
